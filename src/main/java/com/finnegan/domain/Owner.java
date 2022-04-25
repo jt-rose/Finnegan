@@ -1,15 +1,11 @@
 package com.finnegan.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
-@Table(name = "users")
-public class User {
+@Table(name = "owners")
+public class Owner {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false, updatable = false)
@@ -24,7 +20,10 @@ public class User {
     @Column(name = "active", nullable = false)
     private boolean active;
 
-    public User(String email, String password) {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
+    private List<Transaction> transactions;
+
+    public Owner(String email, String password) {
         this.email = email;
         // this will be changed to a hashed password once we add in spring
         // security
@@ -32,7 +31,7 @@ public class User {
         this.active = true;
     }
 
-    public User() {
+    public Owner() {
     }
 
     public long getId() {
@@ -61,6 +60,15 @@ public class User {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public List<Transaction> getTransactions() {
+        return transactions;
+    }
+
+    public void setTransactions(
+            List<Transaction> transactions) {
+        this.transactions = transactions;
     }
 
     @Override

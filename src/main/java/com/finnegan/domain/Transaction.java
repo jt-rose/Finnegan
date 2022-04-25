@@ -1,11 +1,6 @@
 package com.finnegan.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -16,7 +11,9 @@ public class Transaction {
     @Column(name = "id", nullable = false, updatable = false)
     private long id;
 
-    // private long user_id; FK
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "owner", nullable = false)
+    private Owner owner;
     // private long account_id; FK
 
     @Column(name = "amount", nullable = false)
@@ -33,8 +30,10 @@ public class Transaction {
     @Column(name = "date", nullable = false)
     private Date date;
 
-    public Transaction(double amount, String category, String note,
+    public Transaction(Owner owner, double amount, String category,
+                       String note,
                        Date date) {
+        this.owner = owner;
         this.amount = amount;
         this.category = category;
         this.note = note;
@@ -78,6 +77,14 @@ public class Transaction {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public Owner getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Owner owner) {
+        this.owner = owner;
     }
 
     @Override

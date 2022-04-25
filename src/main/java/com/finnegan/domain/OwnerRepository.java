@@ -2,5 +2,5 @@ package com.finnegan.domain;
 
 import org.springframework.data.repository.CrudRepository;
 
-public interface UserRepository extends CrudRepository<User, Long> {
+public interface OwnerRepository extends CrudRepository<Owner, Long> {
 }
