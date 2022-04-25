@@ -2,6 +2,8 @@ package com.finnegan;
 
 import com.finnegan.domain.Transaction;
 import com.finnegan.domain.TransactionRespository;
+import com.finnegan.domain.User;
+import com.finnegan.domain.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,6 +17,8 @@ import java.util.Date;
 
 @SpringBootApplication
 public class FinneganApplication {
+    @Autowired
+    private UserRepository userRepo;
     @Autowired
     private TransactionRespository transactionRepo;
     private static final Logger logger =
@@ -43,6 +47,10 @@ public class FinneganApplication {
             System.out.println(transactionRepo.findByCategory("SHOPPING"));
             System.out.println(transactionRepo.findByAmountOrCategoryOrderByAmountDesc(800.00, "GROCERIES"));
             System.out.println(transactionRepo.findByAmount(200.00));
+
+            var user1 = new User("fake@fake.com", "secret");
+            userRepo.save(user1);
+            System.out.println(userRepo.findAll());
         };
     }
 
