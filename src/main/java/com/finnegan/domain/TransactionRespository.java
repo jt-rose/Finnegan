@@ -2,10 +2,11 @@ package com.finnegan.domain;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.List;
 
-public interface TransactionRespository extends CrudRepository <Transaction,
+public interface TransactionRespository extends PagingAndSortingRepository <Transaction,
         Long> {
 
     List<Transaction> findByCategory(String Category);
