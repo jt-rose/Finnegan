@@ -1,6 +1,6 @@
 package com.finnegan;
 
-import com.finnegan.web.OwnerController;
+import com.finnegan.web.UserController;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,8 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 class FinneganApplicationTests {
     @Autowired
-    private OwnerController controller; // add transaction later
-    // rewrite to just users later
+    private UserController controller; // add transaction later
 
     @Test
     void contextLoads() {

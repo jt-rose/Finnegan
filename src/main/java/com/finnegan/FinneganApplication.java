@@ -17,8 +17,6 @@ public class FinneganApplication {
     @Autowired
     private UserRepository userRepo;
     @Autowired
-    private OwnerRepository ownerRepo;
-    @Autowired
     private TransactionRespository transactionRepo;
     private static final Logger logger =
             LoggerFactory.getLogger(FinneganApplication.class);
@@ -31,15 +29,6 @@ public class FinneganApplication {
     @Bean
     CommandLineRunner runner() {
         return args -> {
-            // add owners
-//            var owner1 = new Owner("fake@fake.com", "secret");
-//            ownerRepo.save(owner1);
-//            var owner2 = new Owner("fake2@fake.com", "secret");
-//            ownerRepo.save(owner2);
-//            System.out.println(ownerRepo.findAll());
-
-
-
             // username: user, password: password
             var user1 = new User("user", "$2a$10$xw9sBPJ/cRwGSapvznh09" +
                     ".c//wwfY8rnaPkkNeXcKhN19vRuveDIC", "USER");
