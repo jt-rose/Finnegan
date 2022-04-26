@@ -13,7 +13,7 @@ public class Transaction {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner", nullable = false)
-    private Owner owner;
+    private User owner;
     // private long account_id; FK
 
     @Column(name = "amount", nullable = false)
@@ -30,7 +30,7 @@ public class Transaction {
     @Column(name = "date", nullable = false)
     private Date date;
 
-    public Transaction(Owner owner, double amount, String category,
+    public Transaction(User owner, double amount, String category,
                        String note,
                        Date date) {
         this.owner = owner;
@@ -79,11 +79,11 @@ public class Transaction {
         this.date = date;
     }
 
-    public Owner getOwner() {
+    public User getOwner() {
         return owner;
     }
 
-    public void setOwner(Owner owner) {
+    public void setOwner(User owner) {
         this.owner = owner;
     }
 

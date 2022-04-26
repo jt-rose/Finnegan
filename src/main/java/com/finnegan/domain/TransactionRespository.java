@@ -16,5 +16,4 @@ public interface TransactionRespository extends PagingAndSortingRepository <Tran
 
     @Query("SELECT t FROM Transaction t WHERE t.amount > ?1 ORDER BY t.amount")
     List<Transaction> findByAmount(double amount);
-
 }

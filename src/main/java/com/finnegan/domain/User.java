@@ -1,8 +1,13 @@
 package com.finnegan.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "users")
 public class User {
     @Id
@@ -18,6 +23,10 @@ public class User {
 
     @Column(nullable = false)
     private String role;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
+    @JsonIgnore
+    private List<Transaction> transactions;
 
     public User() {}
 

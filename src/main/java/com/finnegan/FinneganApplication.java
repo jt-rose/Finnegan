@@ -32,26 +32,13 @@ public class FinneganApplication {
     CommandLineRunner runner() {
         return args -> {
             // add owners
-            var owner1 = new Owner("fake@fake.com", "secret");
-            ownerRepo.save(owner1);
-            var owner2 = new Owner("fake2@fake.com", "secret");
-            ownerRepo.save(owner2);
-            System.out.println(ownerRepo.findAll());
+//            var owner1 = new Owner("fake@fake.com", "secret");
+//            ownerRepo.save(owner1);
+//            var owner2 = new Owner("fake2@fake.com", "secret");
+//            ownerRepo.save(owner2);
+//            System.out.println(ownerRepo.findAll());
 
-            var item = new Transaction(owner1, 100.00, "GROCERIES", "",
-                    new Date());
-            var item2 = new Transaction(owner1, 800.00, "ELECTRICITY", "",
-                    new Date());
-            var item3 = new Transaction(owner2, 300.00, "SHOPPING", "new " +
-                    "shoes",
-                    new Date());
-            transactionRepo.save(item);
-            transactionRepo.save(item2);
-            transactionRepo.save(item3);
 
-            System.out.println(transactionRepo.findByCategory("SHOPPING"));
-            System.out.println(transactionRepo.findByAmountOrCategoryOrderByAmountDesc(800.00, "GROCERIES"));
-            System.out.println(transactionRepo.findByAmount(200.00));
 
             // username: user, password: password
             var user1 = new User("user", "$2a$10$xw9sBPJ/cRwGSapvznh09" +
@@ -63,6 +50,21 @@ public class FinneganApplication {
             userRepo.save(user1);
             userRepo.save(user2);
             System.out.println(userRepo.findAll());
+
+            var item = new Transaction(user1, 100.00, "GROCERIES", "",
+                    new Date());
+            var item2 = new Transaction(user1, 800.00, "ELECTRICITY", "",
+                    new Date());
+            var item3 = new Transaction(user2, 300.00, "SHOPPING", "new " +
+                    "shoes",
+                    new Date());
+            transactionRepo.save(item);
+            transactionRepo.save(item2);
+            transactionRepo.save(item3);
+
+            System.out.println(transactionRepo.findByCategory("SHOPPING"));
+            System.out.println(transactionRepo.findByAmountOrCategoryOrderByAmountDesc(800.00, "GROCERIES"));
+            System.out.println(transactionRepo.findByAmount(200.00));
         };
     }
 

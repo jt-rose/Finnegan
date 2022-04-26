@@ -9,4 +9,6 @@ import java.util.List;
 public interface OwnerRepository extends CrudRepository<Owner, Long> {
     // fetch owner by email
     List<Owner> findByEmail(@Param("email") String email);
+
+
 }

@@ -24,9 +24,9 @@ public class Owner {
     @Column(name = "active", nullable = false)
     private boolean active;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
-    @JsonIgnore
-    private List<Transaction> transactions;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
+//    @JsonIgnore
+//    private List<Transaction> transactions;
 
     public Owner(String email, String password) {
         this.email = email;
@@ -67,14 +67,14 @@ public class Owner {
         this.active = active;
     }
 
-    public List<Transaction> getTransactions() {
-        return transactions;
-    }
-
-    public void setTransactions(
-            List<Transaction> transactions) {
-        this.transactions = transactions;
-    }
+//    public List<Transaction> getTransactions() {
+//        return transactions;
+//    }
+//
+//    public void setTransactions(
+//            List<Transaction> transactions) {
+//        this.transactions = transactions;
+//    }
 
     @Override
     public String toString() {
