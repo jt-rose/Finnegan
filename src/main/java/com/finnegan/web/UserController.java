@@ -6,7 +6,7 @@ import com.finnegan.domain.User;
 import com.finnegan.domain.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
@@ -19,12 +19,12 @@ public class UserController {
     @Autowired
     private UserRepository userRepo;
 
-    @RequestMapping("/")
+    @GetMapping("/")
     public Iterable<Transaction> getTransactions() {
         return transactionRepo.findAll();
     }
 
-    @RequestMapping("/me")
+    @GetMapping("/me")
     public User getCurrentUser(Authentication auth) {
         var user = auth.getName();
         System.out.println(user);
