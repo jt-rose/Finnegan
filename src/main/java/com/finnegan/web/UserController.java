@@ -50,6 +50,7 @@ public class UserController {
     }
 
     // may refactor later to use single query
+    // return new JWT with user
     @PutMapping("/user/{id}")
     public ResponseEntity<User> editUsername(Authentication auth,
                                @PathVariable("id") Long id,

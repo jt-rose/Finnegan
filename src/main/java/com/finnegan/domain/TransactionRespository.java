@@ -9,7 +9,8 @@ import java.util.List;
 public interface TransactionRespository extends PagingAndSortingRepository <Transaction,
         Long> {
 
-    List<Transaction> findByCategory(String Category);
+    List<Transaction> findByOwner(User owner);
+    List<Transaction> findByCategory(String category);
 
     List<Transaction> findByAmountOrCategoryOrderByAmountDesc(double amount,
                                                              String category);
