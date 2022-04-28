@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Date;
+import java.util.Map;
 
 @RestController
 public class UserController {
@@ -48,16 +49,28 @@ public class UserController {
         return user;
     }
 
-//    @PutMapping("/user/{id}")
-//    public User editUsername(@PathVariable("id") Long id,
-//                         @RequestBody String username) {
-//        var currentUser = userRepo.findById(id);
-//        if (currentUser.isPresent()) {
-//
-//        }
-//        currentUser.
-//
-//    }
+    // may refactor later to use single query
+    @PutMapping("/user/{id}")
+    public ResponseEntity<User> editUsername(Authentication auth,
+                               @PathVariable("id") Long id,
+                         @RequestBody Map<String, String> username) {
+        var authenticatedUser = auth.getName();
+        var user = userRepo.findById(id);
+        if (user.isPresent()) {
+            if (!authenticatedUser.equals(user.get().getUsername())) {
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            }
+            var updatedUser = user.get();
+            updatedUser.setUsername(username.get("username"));
+            System.out.println(username.get("username"));
+            System.out.println(updatedUser.toString());
+            userRepo.save(updatedUser);
+            return new ResponseEntity<User>(updatedUser, HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+    }
 
     @DeleteMapping("/user/{id}")
     public ResponseEntity<User> deleteUser(Authentication auth,
@@ -67,8 +80,6 @@ public class UserController {
             var user = userRepo.findById(id);
             if (user.isPresent()) {
                 if (!authenticatedUser.equals(user.get().getUsername())) {
-                    System.out.println(authenticatedUser);
-                    System.out.println(user.get().getUsername());
                     return new ResponseEntity<>(HttpStatus.FORBIDDEN);
                 }
                 userRepo.deleteById(id);
