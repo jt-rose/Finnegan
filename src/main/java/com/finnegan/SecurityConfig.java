@@ -40,7 +40,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     // add login filter and auth filter
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().cors().and().authorizeRequests().antMatchers(
+        http.csrf().disable().cors().and().authorizeRequests()
+                .antMatchers(HttpMethod.POST, "/user").permitAll()
+                .antMatchers(
                 HttpMethod.POST, "/login").permitAll().anyRequest().authenticated().and()
                 // filter for api/login requests
                 .addFilterBefore(new LoginFilter("/login",
