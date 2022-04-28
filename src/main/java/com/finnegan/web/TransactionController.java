@@ -30,6 +30,11 @@ public class TransactionController {
     }
 
     // get account sum
+    @GetMapping("transactions/sum")
+    public double getTransactionsSum(Authentication auth) {
+        var user = userRepo.findByUsername(auth.getName());
+        return transactionRepo.findAccountSum(user);
+    }
 
     // create transaction
 
