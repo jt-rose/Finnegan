@@ -6,8 +6,8 @@ import com.finnegan.domain.User;
 import com.finnegan.domain.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 
@@ -19,12 +19,10 @@ public class UserController {
     @Autowired
     private UserRepository userRepo;
 
-    @GetMapping("/")
-    public Iterable<Transaction> getTransactions() {
-        return transactionRepo.findAll();
-    }
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
-    @GetMapping("/me")
+    @GetMapping("/user")
     public User getCurrentUser(Authentication auth) {
         var user = auth.getName();
         System.out.println(user);
@@ -36,4 +34,22 @@ public class UserController {
         transactionRepo.save(t1);
         return me;
     }
+
+    @PostMapping("/user")
+    public User createUser(@RequestBody User userInput) {
+        var unhashedPassword = userInput.getPassword();
+        userInput.setPassword(passwordEncoder.encode(unhashedPassword));
+        userInput.setRole("USER");
+
+        var user = userRepo.save(userInput);
+        return user;
+    }
+
+//    @PutMapping("/user/{id}")
+//    public User editUser() {}
+
+//    @DeleteMapping("/user/{id}")
+//    public User deleteUser() {
+//
+//    }
 }
