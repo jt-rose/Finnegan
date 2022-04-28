@@ -5,9 +5,12 @@ import com.finnegan.domain.TransactionRespository;
 import com.finnegan.domain.User;
 import com.finnegan.domain.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Date;
 
@@ -46,10 +49,34 @@ public class UserController {
     }
 
 //    @PutMapping("/user/{id}")
-//    public User editUser() {}
-
-//    @DeleteMapping("/user/{id}")
-//    public User deleteUser() {
+//    public User editUsername(@PathVariable("id") Long id,
+//                         @RequestBody String username) {
+//        var currentUser = userRepo.findById(id);
+//        if (currentUser.isPresent()) {
+//
+//        }
+//        currentUser.
 //
 //    }
+
+    @DeleteMapping("/user/{id}")
+    public ResponseEntity<User> deleteUser(Authentication auth,
+                                           @PathVariable("id") Long id) {
+
+            var authenticatedUser = auth.getName();
+            var user = userRepo.findById(id);
+            if (user.isPresent()) {
+                if (!authenticatedUser.equals(user.get().getUsername())) {
+                    System.out.println(authenticatedUser);
+                    System.out.println(user.get().getUsername());
+                    return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+                }
+                userRepo.deleteById(id);
+                // clear JWT on frontend
+                return new ResponseEntity<User>(user.get(), HttpStatus.OK);
+            }
+
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+    }
 }
