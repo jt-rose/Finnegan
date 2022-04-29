@@ -1,11 +1,12 @@
 package com.finnegan.web;
 
-import com.finnegan.domain.Transaction;
-import com.finnegan.domain.TransactionRespository;
-import com.finnegan.domain.User;
-import com.finnegan.domain.UserRepository;
+import com.finnegan.domain.*;
 import com.finnegan.service.UserDetailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -27,6 +28,15 @@ public class TransactionController {
     public List<Transaction> getTransactions(Authentication auth) {
         var user = userRepo.findByUsername(auth.getName());
         return transactionRepo.findByOwner(user);
+    }
+
+    @GetMapping("/transactions/paginated")
+    public Page<Transaction> getPaginatedTransactions(Authentication auth,
+                                                      @Param("page") int page,
+                                                      @Param("size") int size) {
+        var user = userRepo.findByUsername(auth.getName());
+        var pageable = PageRequest.of(page, size);
+        return transactionRepo.findByOwner(user, pageable);
     }
 
     // get account sum
