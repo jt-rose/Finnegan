@@ -9,8 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,13 +29,21 @@ public class TransactionController {
     }
 
     // get account sum
-    @GetMapping("transactions/sum")
+    @GetMapping("/transactions/sum")
     public double getTransactionsSum(Authentication auth) {
         var user = userRepo.findByUsername(auth.getName());
         return transactionRepo.findAccountSum(user);
     }
 
     // create transaction
+    @PostMapping("/transactions")
+    public Transaction createTransaction(Authentication auth,
+                                         @RequestBody Transaction transaction) {
+        var user = userRepo.findByUsername(auth.getName());
+        transaction.setOwner(user);
+        transactionRepo.save(transaction);
+        return transaction;
+    }
 
     // edit transaction
 
