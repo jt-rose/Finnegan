@@ -2,6 +2,7 @@ package com.finnegan.web;
 
 import com.finnegan.domain.Transaction;
 import com.finnegan.domain.TransactionRespository;
+import com.finnegan.domain.User;
 import com.finnegan.domain.UserRepository;
 import com.finnegan.service.UserDetailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,4 +49,21 @@ public class TransactionController {
     // edit transaction
 
     // delete transaction
+    @DeleteMapping("/transactions/{id}")
+    public ResponseEntity<Transaction> deleteTransaction(Authentication auth,
+                                         @PathVariable("id") Long id) {
+        var user = userRepo.findByUsername(auth.getName());
+        var transaction = transactionRepo.findById(id);
+            if (transaction.isPresent()) {
+                // check if transaction belongs to user
+                if (!user.equals(transaction.get().getOwner())) {
+
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            }
+            transactionRepo.deleteById(id);
+            // clear JWT on frontend
+            return new ResponseEntity<Transaction>(transaction.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 }
