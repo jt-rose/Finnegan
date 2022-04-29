@@ -47,6 +47,26 @@ public class TransactionController {
     }
 
     // edit transaction
+    @PutMapping("/transactions/{id}")
+    public ResponseEntity<Transaction> editTransaction(Authentication auth,
+                                                       @PathVariable("id") Long id, @RequestBody Transaction updatedTransaction) {
+        var user = userRepo.findByUsername(auth.getName());
+        var transaction = transactionRepo.findById(id);
+        if (transaction.isPresent()) {
+            // check if transaction belongs to user
+            if (!user.equals(transaction.get().getOwner())) {
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            }
+            var update = transaction.get();
+            update.setAmount(updatedTransaction.getAmount());
+            update.setCategory(updatedTransaction.getCategory());
+            update.setDate(updatedTransaction.getDate());
+            update.setNote(updatedTransaction.getNote());
+            transactionRepo.save(update);
+            return new ResponseEntity<Transaction>(update, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
     // delete transaction
     @DeleteMapping("/transactions/{id}")
