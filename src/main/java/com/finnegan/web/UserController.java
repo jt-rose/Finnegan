@@ -3,12 +3,15 @@ package com.finnegan.web;
 import com.finnegan.domain.User;
 import com.finnegan.domain.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.Map;
 
 @RestController
@@ -59,6 +62,25 @@ public class UserController {
 
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
+    }
+
+    @PutMapping("/user/setgoal")
+    public User setGoal(Authentication auth,
+                                @Param("goal") Double goal,
+                        @Param("date") @DateTimeFormat(iso =
+                                DateTimeFormat.ISO.DATE) Date date) {
+        // get user record
+        var authenticatedUser = auth.getName();
+        var user = userRepo.findByUsername(authenticatedUser);
+
+        // update user goals
+        user.setGoal(goal);
+        user.setGoalDate(date);
+
+        userRepo.save(user);
+
+        // return updated user object
+        return user;
     }
 
     @DeleteMapping("/user/{id}")
