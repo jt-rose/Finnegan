@@ -11,7 +11,7 @@ public class Transaction extends TransactionParent {
     @JoinColumn(name = "owner", nullable = false)
     private User owner;
 
-    public Transaction(User owner, double amount, String category,
+    public Transaction(User owner, double amount, TransactionCategory category,
                        String note, Date date) {
         super(amount, category, note, date);
         this.owner = owner;

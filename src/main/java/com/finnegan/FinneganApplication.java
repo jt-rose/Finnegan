@@ -48,25 +48,29 @@ public class FinneganApplication {
             userRepo.save(user2);
             System.out.println(userRepo.findAll());
 
-            var item = new Transaction(user1, 100.00, "GROCERIES", "",
+            var item = new Transaction(user1, 100.00, TransactionCategory.SCHOOL, "",
                     new Date());
-            var item2 = new Transaction(user1, 800.00, "ELECTRICITY", "",
+            var item2 = new Transaction(user1, 800.00, TransactionCategory.HOME,
+                    "",
                     new Date());
-            var item3 = new Transaction(user2, 300.00, "SHOPPING", "new " +
+            var item3 = new Transaction(user2, 300.00, TransactionCategory.ENTERTAINMENT,
+                    "new " +
                     "shoes",
                     new Date());
             transactionRepo.save(item);
             transactionRepo.save(item2);
             transactionRepo.save(item3);
 
-            System.out.println(transactionRepo.findByCategory("SHOPPING"));
-            System.out.println(transactionRepo.findByAmountOrCategoryOrderByAmountDesc(800.00, "GROCERIES"));
+            System.out.println(transactionRepo.findByCategory(TransactionCategory.SCHOOL));
+            System.out.println(transactionRepo.findByAmountOrCategoryOrderByAmountDesc(800.00, TransactionCategory.SCHOOL));
             System.out.println(transactionRepo.findByAmount(200.00));
 
-            var recurringItem1 = new RecurringTransaction(user1, 100.00, "GROCERIES", "",
+            var recurringItem1 = new RecurringTransaction(user1, 100.00,
+                    TransactionCategory.SCHOOL,
+                    "",
                     new Date(), new Date(), null, RepetitionCycle.WEEKLY);
             var recurringItem2 = new RecurringTransaction(user1, 300.00,
-                    "GROCERIES", "",
+                    TransactionCategory.GROCERIES, "",
                     new Date(), new Date(), new Date(), RepetitionCycle.WEEKLY);
 
             System.out.println(recurringItem1);

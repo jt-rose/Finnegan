@@ -10,10 +10,10 @@ public interface TransactionRepository extends PagingAndSortingRepository <Trans
         Long> {
 
     List<Transaction> findByOwner(User owner);
-    List<Transaction> findByCategory(String category);
+    List<Transaction> findByCategory(TransactionCategory category);
 
     List<Transaction> findByAmountOrCategoryOrderByAmountDesc(double amount,
-                                                              String category);
+                                                              TransactionCategory category);
 
     Page<Transaction> findByOwner(User owner, Pageable pageable);
 

@@ -1,7 +1,8 @@
 package com.finnegan;
 
 import com.finnegan.domain.Transaction;
-import com.finnegan.domain.TransactionRespository;
+import com.finnegan.domain.TransactionCategory;
+import com.finnegan.domain.TransactionRepository;
 import com.finnegan.domain.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +22,12 @@ public class TransactionRepositoryTest {
     private UserRepository userRepo;
 
     @Autowired
-    private TransactionRespository transactionRepo;
+    private TransactionRepository transactionRepo;
 
     @Test
     public void saveTransaction() {
         var user = userRepo.findByUsername("user");
-        var transaction = new Transaction(user, 300.00, "GROCERIES", "Some " +
+        var transaction = new Transaction(user, 300.00, TransactionCategory.SCHOOL, "Some " +
                 "note", new Date());
         entityManager.persistAndFlush(transaction);
         assertThat(transaction.getId()).isNotNull();
@@ -35,9 +36,9 @@ public class TransactionRepositoryTest {
     @Test
     public void deleteTransactions() {
         var user = userRepo.findByUsername("user");
-        var transaction1 = new Transaction(user, 300.00, "GROCERIES", "Some " +
+        var transaction1 = new Transaction(user, 300.00, TransactionCategory.HOME, "Some " +
                 "note", new Date());
-        var transaction2 = new Transaction(user, 600.00, "GROCERIES", "Some " +
+        var transaction2 = new Transaction(user, 600.00, TransactionCategory.TRANSPORTATION, "Some " +
                 "note", new Date());
         entityManager.persistAndFlush(transaction1);
         entityManager.persistAndFlush(transaction2);

@@ -14,7 +14,8 @@ public class TransactionParent {
     private double amount;
 
     @Column(name = "category", nullable = false)
-    private String category;
+    @Enumerated(EnumType.STRING)
+    private TransactionCategory category;
 
     @Column(name = "note")
     private String note;
@@ -22,9 +23,9 @@ public class TransactionParent {
     @Column(name = "date", nullable = false)
     private Date date;
 
-    public TransactionParent( double amount, String category,
-                       String note,
-                       Date date) {
+    public TransactionParent(double amount, TransactionCategory category,
+                             String note,
+                             Date date) {
         this.amount = amount;
         this.category = category;
         this.note = note;
@@ -46,11 +47,11 @@ public class TransactionParent {
         this.amount = amount;
     }
 
-    public String getCategory() {
+    public TransactionCategory getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(TransactionCategory category) {
         this.category = category;
     }
 

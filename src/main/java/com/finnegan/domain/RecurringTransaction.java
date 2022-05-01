@@ -23,7 +23,7 @@ public class RecurringTransaction extends TransactionParent {
     private RepetitionCycle cycle;
 
     public RecurringTransaction(User owner, double amount,
-                                String category, String note, Date date,
+                                TransactionCategory category, String note, Date date,
                                 Date startDate, Date endDate, RepetitionCycle cycle) {
         super(amount, category, note, date);
         this.owner = owner;

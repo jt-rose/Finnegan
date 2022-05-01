@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 public class TransactionController {
     @Autowired
-    private TransactionRespository transactionRepo;
+    private TransactionRepository transactionRepo;
 
     @Autowired
     private UserRepository userRepo;
