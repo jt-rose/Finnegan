@@ -24,6 +24,9 @@ public class User {
     @Column(nullable = false)
     private String role;
 
+    @Column
+    private Double goal;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
     @JsonIgnore
     private List<Transaction> transactions;
@@ -34,11 +37,12 @@ public class User {
 
     public User() {}
 
-    public User(String username, String password, String role) {
+    public User(String username, String password, String role, Double goal) {
         super();
         this.username = username;
         this.password = password;
         this.role = role;
+        this.goal = goal;
     }
 
     public Long getId() {
@@ -69,12 +73,21 @@ public class User {
         this.role = role;
     }
 
+    public Double getGoal() {
+        return goal;
+    }
+
+    public void setGoal(Double goal) {
+        this.goal = goal;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", role='" + role + '\'' +
+                ", goal=" + goal +
                 '}';
     }
 }
