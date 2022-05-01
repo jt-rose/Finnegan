@@ -28,6 +28,10 @@ public class User {
     @JsonIgnore
     private List<Transaction> transactions;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
+    @JsonIgnore
+    private List<RecurringTransaction> recurringTransactions;
+
     public User() {}
 
     public User(String username, String password, String role) {

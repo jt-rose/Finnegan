@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 
+import javax.transaction.Transactional;
+import java.text.DateFormat;
 import java.util.Date;
 
 
@@ -16,8 +18,14 @@ import java.util.Date;
 public class FinneganApplication {
     @Autowired
     private UserRepository userRepo;
+
     @Autowired
-    private TransactionRespository transactionRepo;
+    private TransactionRepository transactionRepo;
+
+    @Autowired
+    private RecurringTransactionRepository recurringRepo;
+
+
     private static final Logger logger =
             LoggerFactory.getLogger(FinneganApplication.class);
 
@@ -54,7 +62,17 @@ public class FinneganApplication {
             System.out.println(transactionRepo.findByCategory("SHOPPING"));
             System.out.println(transactionRepo.findByAmountOrCategoryOrderByAmountDesc(800.00, "GROCERIES"));
             System.out.println(transactionRepo.findByAmount(200.00));
+
+            var recurringItem1 = new RecurringTransaction(user1, 100.00, "GROCERIES", "",
+                    new Date(), new Date(), null, RepetitionCycle.WEEKLY);
+            var recurringItem2 = new RecurringTransaction(user1, 300.00,
+                    "GROCERIES", "",
+                    new Date(), new Date(), new Date(), RepetitionCycle.WEEKLY);
+
+//            recurringRepo.save(recurringItem1);
+//            recurringRepo.save(recurringItem2);
         };
+
     }
 
 }
