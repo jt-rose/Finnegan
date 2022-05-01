@@ -39,10 +39,12 @@ public class FinneganApplication {
         return args -> {
             // username: user, password: password
             var user1 = new User("user", "$2a$10$xw9sBPJ/cRwGSapvznh09" +
-                    ".c//wwfY8rnaPkkNeXcKhN19vRuveDIC", "USER", 2000.00);
+                    ".c//wwfY8rnaPkkNeXcKhN19vRuveDIC", "USER", 2000.00,
+                    new Date());
             // username: admin, password: password
             var user2 = new User("admin", "$2a$10$7iIqaMZTYx8jjG" +
-                    ".Jobe1KOUSGAbviNiYPBT/1ykzQtvPxUcsGHP0q", "ADMIN", null);
+                    ".Jobe1KOUSGAbviNiYPBT/1ykzQtvPxUcsGHP0q", "ADMIN", null
+                    , null);
 
             userRepo.save(user1);
             userRepo.save(user2);

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -27,6 +28,9 @@ public class User {
     @Column
     private Double goal;
 
+    @Column(name = "goal_date")
+    private Date goalDate;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
     @JsonIgnore
     private List<Transaction> transactions;
@@ -37,12 +41,14 @@ public class User {
 
     public User() {}
 
-    public User(String username, String password, String role, Double goal) {
+    public User(String username, String password, String role, Double goal,
+                Date goalDate) {
         super();
         this.username = username;
         this.password = password;
         this.role = role;
         this.goal = goal;
+        this.goalDate = goalDate;
     }
 
     public Long getId() {
@@ -81,6 +87,14 @@ public class User {
         this.goal = goal;
     }
 
+    public Date getGoalDate() {
+        return goalDate;
+    }
+
+    public void setGoalDate(Date goalDate) {
+        this.goalDate = goalDate;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -88,6 +102,7 @@ public class User {
                 ", username='" + username + '\'' +
                 ", role='" + role + '\'' +
                 ", goal=" + goal +
+                ", goalDate=" + goalDate +
                 '}';
     }
 }
