@@ -12,45 +12,43 @@ public class RecurringTransaction extends TransactionParent {
     private User owner;
 
     @Column(nullable = false)
-    private Date start;
+    private Date startDate;
 
     // end is nullable for recurring transactions without an end date
     @Column()
-    private Date end;
+    private Date endDate;
 
-    @Column(columnDefinition = "ENUM('DAILY', 'WEEKLY', 'MONTHLY', " +
-            "'QUARTERLY')",
-            nullable = false)
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private RepetitionCycle cycle;
 
     public RecurringTransaction(User owner, double amount,
                                 String category, String note, Date date,
-                                Date start, Date end, RepetitionCycle cycle) {
+                                Date startDate, Date endDate, RepetitionCycle cycle) {
         super(amount, category, note, date);
         this.owner = owner;
-        this.start = start;
-        this.end = end;
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.cycle = cycle;
     }
 
     public RecurringTransaction() {
     }
 
-    public Date getStart() {
-        return start;
+    public Date getStartDate() {
+        return startDate;
     }
 
-    public void setStart(Date start) {
-        this.start = start;
+    public void setStartDate(Date start) {
+        this.startDate = start;
     }
 
-    public Date getEnd() {
-        return end;
+    public Date getEndDate() {
+        return endDate;
     }
 
-    public void setEnd(Date end) {
-        this.end = end;
+    public void setEndDate(Date end) {
+        this.endDate = end;
     }
 
     public RepetitionCycle getCycle() {
@@ -73,8 +71,8 @@ public class RecurringTransaction extends TransactionParent {
     public String toString() {
         return "RecurringTransaction{" +
                 "owner=" + owner +
-                ", start=" + start +
-                ", end=" + end +
+                ", start=" + startDate +
+                ", end=" + endDate +
                 ", cycle=" + cycle +
                 "} " + super.toString();
     }

@@ -69,8 +69,10 @@ public class FinneganApplication {
                     "GROCERIES", "",
                     new Date(), new Date(), new Date(), RepetitionCycle.WEEKLY);
 
-//            recurringRepo.save(recurringItem1);
-//            recurringRepo.save(recurringItem2);
+            System.out.println(recurringItem1);
+            System.out.println(recurringItem2);
+            recurringRepo.save(recurringItem1);
+            recurringRepo.save(recurringItem2);
         };
 
     }
