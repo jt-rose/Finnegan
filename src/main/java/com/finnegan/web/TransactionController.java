@@ -33,7 +33,7 @@ public class TransactionController {
                                                       @Param("size") int size) {
         var user = userRepo.findByUsername(auth.getName());
         var pageable = PageRequest.of(page, size);
-        return transactionRepo.findByOwner(user, pageable);
+        return transactionRepo.findByOwnerOrderByDateDesc(user, pageable);
     }
 
     // get account sum

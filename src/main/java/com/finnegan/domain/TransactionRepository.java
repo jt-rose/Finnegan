@@ -15,7 +15,7 @@ public interface TransactionRepository extends PagingAndSortingRepository <Trans
     List<Transaction> findByAmountOrCategoryOrderByAmountDesc(double amount,
                                                               TransactionCategory category);
 
-    Page<Transaction> findByOwner(User owner, Pageable pageable);
+    Page<Transaction> findByOwnerOrderByDateDesc(User owner, Pageable pageable);
 
     @Query("SELECT t FROM Transaction t WHERE t.amount > ?1 ORDER BY t.amount")
     List<Transaction> findByAmount(double amount);
